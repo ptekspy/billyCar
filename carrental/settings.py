@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'cars',
     'contract',
     'i18n_switcher',
-    'modelclone',
     'django_object_actions'
 ]
 
