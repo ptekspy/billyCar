@@ -10,7 +10,8 @@ from PIL import Image, ImageDraw, ImageFont
 # Register your models here.
 from contract.models import Contract
 
-title_font = ImageFont.load_default()
+title_font = ImageFont.FreeTypeFont('Roboto-Medium.ttf', size=20)
+title_font_1x5 = ImageFont.FreeTypeFont('Roboto-Medium.ttf', size=30)
 
 
 @admin.register(Contract)
@@ -52,9 +53,9 @@ class ContractAdmin(DjangoObjectActions, admin.ModelAdmin):
             image_editable.text(pos, text, (0, 0, 0), font=title_font)
         obj = Contract.objects.get(pk=pk)
         image_editable.text((1350, 110), obj.reference,
-                            (0, 0, 0), font=title_font)
+                            (0, 0, 0), font=title_font_1x5)
 
-        addText((130, 270), f"€{obj.amount_to_pay}" if obj.amount_to_pay  else '   ')
+        addText((130, 270), f"{obj.amount_to_pay}" if obj.amount_to_pay  else '   ')
         addText((130, 370), f"{obj.paid_by if obj.paid_by else 'N/A'}")
 
         addText((120, 485), obj.customer.name)
@@ -65,6 +66,7 @@ class ContractAdmin(DjangoObjectActions, admin.ModelAdmin):
         addText((120, 750), obj.customer.address.line_four)
         addText((610, 750), obj.customer.cont)
         addText((120, 815), obj.customer.address.property_type)
+        addText((510, 865), obj.customer.phone)
         # buff = io.BytesIO()
         response = HttpResponse(content_type="image/png")
         my_image.save(response, format='png')
